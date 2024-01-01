@@ -12,8 +12,11 @@
     padding-right: 16px;
     min-height: 56px;
     display: flex;
-    // justify-content: center;
     align-items: center;
+    
+    img{
+      height: 48px;
+    }
 }
 
 mat-toolbar, mat-toolbar-row {
@@ -34,7 +37,7 @@ mat-toolbar, mat-toolbar-row {
         cursor: pointer;
 
         &:hover{
-            background-color: rgba(0, 0, 0 ,0.2);
+            background-color: rgba(0, 0, 0 ,0.1);
         }
         mat-icon{
             padding-right: 20px;
@@ -42,9 +45,6 @@ mat-toolbar, mat-toolbar-row {
     }
    
 }
-// .menu-icon{
-//     cursor: pointer;
-// }
 
 .ham {
     cursor: pointer;
@@ -93,4 +93,10 @@ mat-toolbar, mat-toolbar-row {
   }
   .ham8.active .bottom {
     stroke-dashoffset: -64px;
+  }
+
+  .router-container{
+    padding-top: 16px;
+    padding-left: 68px;
+    padding-right: 68px;
   }
