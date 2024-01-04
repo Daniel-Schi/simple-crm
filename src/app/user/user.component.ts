@@ -74,11 +74,6 @@ export class UserComponent implements OnInit {
     collectionData(colInstance, { idField: 'id' })
     .subscribe(value => {
       console.log('Received changes from DB:', value);
-      // value.forEach(doc => {
-      //   const id = doc.id;
-      //   // const userData = doc.data(); // Zugriff auf die Benutzerdaten
-      //   // // Füge hier deine Logik hinzu, um mit den IDs und Daten zu arbeiten
-      // });
     });
   
     this.allUsers = collectionData(colInstance, { idField: 'id' });    

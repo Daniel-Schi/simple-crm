@@ -1,7 +1,7 @@
 <div class="dialog-container">
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <h1 mat-dialog-title>Add User</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content class="dialogContent">
         <mat-form-field class="mr-16" appearance="outline">
             <mat-label>First Name</mat-label>
             <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First Name">
