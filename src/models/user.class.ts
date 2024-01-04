@@ -5,9 +5,11 @@ export class User {
     birthDate: number;
     street: string;
     zipCode: number;
-    city: string; 
+    city: string;
+    id: any;
 
     constructor(obj?: any) {
+        this.id = obj ? obj.id : '';
         this.firstName = obj ? obj.firstName : '';
         this.lastName = obj ? obj.lastName : '';
         this.eMail = obj ? obj.eMail : '';
@@ -17,16 +19,16 @@ export class User {
         this.city = obj ? obj.city : '';
     }
 
-    public toJSON(){
-        return{
-            firstName :this.firstName,
+    public toJSON() {
+        return {
+            id: this.id,
+            firstName: this.firstName,
             lastName: this.lastName,
             eMail: this.eMail,
             birthDate: this.birthDate,
             street: this.street,
             zipCode: this.zipCode,
             city: this.city
-        
         }
     }
 }

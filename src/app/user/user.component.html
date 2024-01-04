@@ -7,7 +7,7 @@
                 <th>Address</th>
                 <th>City</th>
             </tr>
-            <tr *ngFor="let user of allUsers | async" [routerLink]="['/user/' + user]">
+            <tr *ngFor="let user of allUsers | async" [routerLink]="['/user/' + user.id]">
                 <td> {{ user.firstName }} {{ user.lastName }}</td>
                 <td> {{ user.eMail }}</td>
                 <td> {{ user.street}}</td>
