@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Firestore, collection, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, getDoc, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user.class';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,38 +13,68 @@ import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-a
 })
 export class UserDetailComponent implements OnInit {
   firestore: Firestore = inject(Firestore);
-  userID: any;
+  userID!: any;
   user: User = new User();
+  userList;
+
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute) {
-  }
-
-
-  ngOnInit() {
     this.userID = this.route.snapshot.paramMap.get('id');
-    console.log('show id', this.userID);
-    this.getUser();
+    this.userList = this.getUserFromFirebase();
   }
 
-  getUser() {
-    const userDocRef = doc(this.firestore, 'users', this.userID);
+ngOnInit(){}
 
-    getDoc(userDocRef)
-      .then((docSnapshot) => {
-        const userData = docSnapshot.exists() ? { userID: docSnapshot.id, ...docSnapshot.data() } : null;
-        if (userData) {
-          this.user = new User(userData);
-          console.log('User Data:', this.user);
-        }
-      })
+  ngOnDestroy() {
+    this.userList();
   }
+
+
+  getSingleRef() {
+    return doc(collection(this.firestore, 'users'), this.userID);
+  }
+
+
+  getUserFromFirebase() {
+    return onSnapshot(this.getSingleRef(), (element) => {
+      this.user = new User(element.data());
+      this.user.id = this.userID;
+    });
+  }
+
+  // ngOnInit() {
+  //   this.userID = this.route.snapshot.paramMap.get('id');
+  //   console.log('show id', this.userID);
+
+  //   if (this.userID) {
+  //     this.getUser(this.userID);
+  //   }
+
+  // }
+
+  // getUser(userID: string) {
+  //   const userDocRef = doc(this.firestore, 'users', this.userID);
+
+  //   getDoc(userDocRef)
+  //     .then((docSnapshot) => {
+  //       const userData = docSnapshot.exists() ? { userID: docSnapshot.id, ...docSnapshot.data() } : null;
+  //       if (userData) {
+  //         this.user = new User(userData);
+  //         console.log('User Data:', this.user);
+  //       }
+  //     })
+  // }
 
   editAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user = new User(this.user);
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userID = this.userID;
   }
 
+
   editUser() {
-    this.dialog.open(DialogEditUserComponent);
+    const dialog = this.dialog.open(DialogEditUserComponent);
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userID = this.userID;
   }
 }

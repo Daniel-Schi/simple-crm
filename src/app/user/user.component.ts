@@ -16,6 +16,7 @@ export class UserComponent implements OnInit {
   user = new User();
   userID: any;
   allUsers: any = Observable<any>;
+  dateOfBirth!: any;
   // allUsers$;
   // users;
 //   userList: any = [];
